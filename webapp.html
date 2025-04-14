@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joke and Riddle Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: rgb(250, 230, 235);
+            color:rgb(239, 171, 188);
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: rgb(239, 171, 188);
+        }
+        .container {
+            margin-top: 50px;
+        }
+        #output {
+            font-size: 1.2em;
+            margin: 20px 0;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 1em;
+            margin-top: 10px;
+            border: 2px solid rgb(239, 171, 188);
+            border-radius: 5px;
+        }
+        button {
+            background-color:rgb(239, 171, 188);
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color:rgb(239, 171, 188);
+        }
+        #feedback {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Joke & Riddle Generator</h1>
+    <div class="container">
+        <button onclick="generate()">Generate Joke or Riddle</button>
+        <div id="output"></div>
+        <div id="inputArea"></div>
+        <div id="feedback"></div>
+    </div>
+
+    <script>
+        const jokesAndRiddles = [
+            {
+                type: "joke",
+                prompt: "Why don’t skeletons fight each other?",
+                answer: "They don’t have the guts."
+            },
+            {
+                type: "riddle",
+                prompt: "I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?",
+                answer: "An echo"
+            },
+            {
+                type: "joke",
+                prompt: "Why don't eggs tell jokes?",
+                answer: "Because they might crack up."
+            },
+            {
+                type: "riddle",
+                prompt: "The more of this there is, the less you see. What is it?",
+                answer: "Darkness"
+            }
+        ];
+
+        function generate() {
+            const randomIndex = Math.floor(Math.random() * jokesAndRiddles.length);
+            const selected = jokesAndRiddles[randomIndex];
+            const outputDiv = document.getElementById("output");
+            const inputArea = document.getElementById("inputArea");
+            const feedbackDiv = document.getElementById("feedback");
+
+            if (feedbackDiv.textContent !== "") {
+            feedbackDiv.textContent = "";
+            }
+
+            // Display the joke or riddle
+            outputDiv.textContent = selected.prompt;
+
+            // Clear any previous input fields
+            inputArea.innerHTML = '';
+
+            // Display input field for user guess
+            const inputField = document.createElement("input");
+            inputField.setAttribute("placeholder", "Your answer...");
+            const submitButton = document.createElement("button");
+            submitButton.textContent = "Submit Answer";
+            
+            inputArea.appendChild(inputField);
+            inputArea.appendChild(submitButton);
+
+            // Add event listener to handle answer submission
+            submitButton.onclick = function() {
+                const userAnswer = inputField.value.trim().toLowerCase();
+                const correctAnswer = selected.answer.toLowerCase();
+                if (userAnswer === correctAnswer) {
+                    feedbackDiv.textContent = "Correct! Well done!";
+                    feedbackDiv.style.color = "green";
+                } else {
+                    feedbackDiv.textContent = `Oops! The correct answer is: ${selected.answer}`;
+                    feedbackDiv.style.color = "red";
+                }
+            };
+        }
+    </script>
+</body>
+</html>
